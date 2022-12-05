@@ -3,7 +3,16 @@ class FlatsController < ApplicationController
 
   # GET /flats or /flats.json
   def index
-    @flats = policy_scope(Flat)
+    if params[:query].present?
+      sql_query = <<~SQL
+        flats.name @@ :query
+        OR flats.description @@ :query
+        OR flats.address @@ :query
+      SQL
+      @flats = policy_scope(Flat.where(sql_query, query: "%#{params[:query]}%"))
+    else
+      @flats = policy_scope(Flat.all)
+    end
     @markers = @flats.geocoded.map do |flat|
       {
         lat: flat.latitude,
