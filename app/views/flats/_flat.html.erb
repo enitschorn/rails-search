@@ -1,32 +1,12 @@
-<div id="<%= dom_id flat %>">
-  <p>
-    <strong>Name:</strong>
-    <%= flat.name %>
-  </p>
-
-  <p>
-    <strong>Address:</strong>
-    <%= flat.address %>
-  </p>
-
-  <p>
-    <strong>Description:</strong>
-    <%= flat.description %>
-  </p>
-
-  <p>
-    <strong>Price per night:</strong>
-    <%= flat.price_per_night %>
-  </p>
-
-  <p>
-    <strong>Number of guests:</strong>
-    <%= flat.number_of_guests %>
-  </p>
-
-  <p>
-    <strong>User:</strong>
-    <%= flat.user_id %>
-  </p>
-
-</div>
+<%= link_to flat do %>
+  <div class="card-trip">
+    <img src="<%= flat.picture_url%>" />
+    <div class="card-trip-infos">
+      <div>
+        <h2><%= flat.name %></h2>
+        <p><%= flat.description %></p>
+      </div>
+      <h2 class="card-trip-pricing"><%= flat.price_per_night %></h2>
+    </div>
+  </div>
+<% end %>

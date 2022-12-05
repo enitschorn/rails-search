@@ -1,10 +1,12 @@
-<h1>Editing flat</h1>
-
-<%= render "form", flat: @flat %>
-
-<br>
-
-<div>
-  <%= link_to "Show this flat", @flat %> |
-  <%= link_to "Back to flats", flats_path %>
+<div class="container mt-3">
+  <div class="row justify-content-center">
+    <div class="col-sm-8">
+      <h1>Editing flat</h1>
+      <%= render "form", flat: @flat %>
+      <div class="mt-3">
+        <%= link_to "Show this flat", @flat, class: "btn btn-primary px-3" %>
+        <%= link_to "Back to flats", flats_path, class: "btn btn-outline-primary px-3" %>
+      </div>
+    </div>
+  </div>
 </div>
