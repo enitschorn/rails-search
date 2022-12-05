@@ -1,6 +1,7 @@
 <p style="color: green"><%= notice %></p>
 
 <%= render @flat %>
+<%= link_to "Book Now", new_flat_booking_path(@flat), class: "btn btn-gradient" %>
 
 <div>
   <% if policy(@flat).edit? %>
