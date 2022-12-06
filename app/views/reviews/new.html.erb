@@ -1,0 +1,11 @@
+<div class="container mt-3">
+  <div class="row justify-content-center">
+    <div class="col-sm-8">
+      <h1>New review for your stay at <em><%= @flat.name %></em></h1>
+      <%= render "form", flat: @flat, review: @review %>
+      <div class="mt-3">
+        <%= link_to "Back to flat", flat_path(@flat), class: "btn btn-outline-primary px-3" %>
+      </div>
+    </div>
+  </div>
+</div>
