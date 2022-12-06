@@ -23,6 +23,16 @@
           <%= button_to "Destroy this flat", @flat, class: "btn btn-outline-primary", method: :delete if policy(@flat).destroy? %>
         </div>
       </div>
+      <div class="container mt-5 mb-5">
+        <h5><%= pluralize @flat.reviews.size, 'Review' %>  <%= rating_display(@flat) %></h5>
+        <% if @flat.reviews.present? %>
+          <% @flat.reviews.each do |review| %>
+            <div class="mt-4">
+              <%= review.description %>
+            </div>
+            <% end %>
+          <% end %>
+      </div>
     </div>
   </div>
 </div>

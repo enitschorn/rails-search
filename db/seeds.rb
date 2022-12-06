@@ -8,6 +8,7 @@
 
 Flat.destroy_all
 User.destroy_all
+Review.destroy_all
 
 user_one = User.create!(
   email: 'user1@user.com',
@@ -57,4 +58,30 @@ Flat.create!(
   number_of_guests: 5,
   picture_url: 'https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=1200',
   user_id: user_two.id
+)
+
+Review.create!(
+  description: 'Lovely! Definitely had the best stay there. Make sure to check out the cafe at the corner - great coffee!',
+  rating: 4,
+  flat_id: Flat.first.id
+)
+
+Review.create!(
+  description: 'So much fun! Very recommendable!',
+  rating: 5,
+  flat_id: Flat.first.id
+)
+
+Review.create!(
+  description: 'Hated it! Horrible host, horrible house! Just the worst',
+  rating: 1,
+  flat_id: Flat.last.id
+)
+
+Booking.create!(
+  start_date: Date.today,
+  end_date: Date.today + 5,
+  total_price: 450,
+  user_id: User.first.id,
+  flat_id: Flat.first.id,
 )

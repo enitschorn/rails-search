@@ -1,0 +1,74 @@
+<div class="container my-3">
+  <h3>Recently booked flats</h3>
+  <div class="row row-cols-1 row-cols-md-3 g-4">
+    <% @bookings.each do |booking| %>
+      <div class="col">
+        <div class="card h-100">
+          <img src="<%= booking.flat.picture_url %>" class="card-img-top" alt="<%= booking.flat.name %>"">
+          <div class="card-body">
+            <h5 class="card-title"><%= booking.flat.name %></h5>
+            <p class="card-text"><%= booking.flat.description %></p>
+            <p class="card-text"><small class="text-muted"><%= booking.start_date.strftime('%A, %b %d') %> - <%= booking.end_date.strftime('%A, %b %d') %></small></p>
+            <p class="card-text">
+              <small class="text-muted">
+                $ <%= booking.total_price %>
+              </small>
+            </p>
+            <p class="card-text">
+              <%= link_to "Edit booking", bookings_path(@booking), class: "btn btn-outline-primary px-3" %>
+            </p>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>
+
+<div class="container my-3">
+  <h3>Your flats</h3>
+  <div class="row row-cols-1 row-cols-md-3 g-4">
+    <% @flats.each do |flat| %>
+      <div class="col">
+        <div class="card h-100">
+          <img src="<%= flat.picture_url %>" class="card-img-top" alt="<%= flat.name %>">
+          <div class="card-body">
+            <h5 class="card-title"><%= flat.name %></h5>
+            <p class="card-text"><%= flat.description %></p>
+            <p class="card-text"><small class="text-muted">Price per night: $ <%= flat.price_per_night %></small></p>
+            <p class="card-text"><small class="text-muted">Number of guests: <%= flat.number_of_guests %></small>
+            </p>
+            <p class="card-text">
+              <%= link_to "Edit flat", bookings_path(@booking), class: "btn btn-outline-primary px-3" %>
+            </p>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>
+
+<div class="container my-3">
+  <h3>Your booked flats</h3>
+  <div class="row row-cols-1 row-cols-md-3 g-4">
+    <% @flats.each do |flat| %>
+      <% flat.bookings.each do |booking| %>
+        <div class="col">
+          <div class="card h-100">
+          <img src="<%= booking.flat.picture_url %>" class="card-img-top" alt="<%= booking.flat.name %>"">
+          <div class="card-body">
+            <h5 class="card-title"><%= booking.flat.name %></h5>
+            <p class="card-text"><%= booking.flat.description %></p>
+            <p class="card-text"><small class="text-muted"><%= booking.start_date.strftime('%A, %b %d') %> - <%= booking.end_date.strftime('%A, %b %d') %></small></p>
+            <p class="card-text">
+              <small class="text-muted">
+                <% date = booking.end_date.mjd - booking.start_date.mjd + 1 %>
+                $ <%= booking.flat.price_per_night*date %>
+              </small>
+            </p>
+          </div>
+        </div>
+        </div>
+      <% end %>
+    <% end %>
+  </div>
+</div>

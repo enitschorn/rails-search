@@ -14,6 +14,8 @@ class BookingsController < ApplicationController
     @booking = Booking.new(booking_params)
     @booking.user = current_user
     @booking.flat = @flat
+    date = @booking.end_date.mjd - @booking.start_date.mjd + 1
+    @booking.total_price = @booking.flat.price_per_night * date
     authorize @booking
     if @booking.save
       redirect_to flat_path(@flat)
