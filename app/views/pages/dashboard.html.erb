@@ -6,6 +6,7 @@
         <div class="card h-100">
           <img src="<%= booking.flat.picture_url %>" class="card-img-top" alt="<%= booking.flat.name %>"">
           <div class="card-body">
+            <span class="mb-2 badge bg-primary"><%= booking.status.capitalize %></span>
             <h5 class="card-title"><%= booking.flat.name %></h5>
             <p class="card-text"><%= booking.flat.description %></p>
             <p class="card-text"><small class="text-muted"><%= booking.start_date.strftime('%A, %b %d') %> - <%= booking.end_date.strftime('%A, %b %d') %></small></p>
@@ -54,19 +55,40 @@
       <% flat.bookings.each do |booking| %>
         <div class="col">
           <div class="card h-100">
-          <img src="<%= booking.flat.picture_url %>" class="card-img-top" alt="<%= booking.flat.name %>"">
-          <div class="card-body">
-            <h5 class="card-title"><%= booking.flat.name %></h5>
-            <p class="card-text"><%= booking.flat.description %></p>
-            <p class="card-text"><small class="text-muted"><%= booking.start_date.strftime('%A, %b %d') %> - <%= booking.end_date.strftime('%A, %b %d') %></small></p>
-            <p class="card-text">
-              <small class="text-muted">
-                <% date = booking.end_date.mjd - booking.start_date.mjd + 1 %>
-                $ <%= booking.flat.price_per_night*date %>
-              </small>
-            </p>
+            <img src="<%= booking.flat.picture_url %>" class="card-img-top" alt="<%= booking.flat.name %>"">
+            <div class="card-body">
+              <span class="mb-2 badge bg-primary"><%= booking.status.capitalize %></span>
+              <h5 class="card-title"><%= booking.flat.name %></h5>
+              <p class="card-text"><%= booking.flat.description %></p>
+              <p class="card-text"><small class="text-muted"><%= booking.start_date.strftime('%A, %b %d') %> - <%= booking.end_date.strftime('%A, %b %d') %></small></p>
+              <p class="card-text">
+                <small class="text-muted">
+                  <% date = booking.end_date.mjd - booking.start_date.mjd + 1 %>
+                  $ <%= booking.flat.price_per_night*date %>
+                </small>
+              </p>
+              <% if booking.status == "pending" || booking.status == "declined" %>
+                <p class="card-text">
+                  <%= form_with model: booking, method: :put, class: "d-flex" do |f| %>
+                      <div class="actions">
+                          <%= f.hidden_field :status, value: "confirmed" %>
+                          <%= f.submit "Confirm booking", class: "btn btn-outline-primary px-3" %>
+                      </div>
+                  <% end %>
+                </p>
+              <% end %>
+              <% if booking.status == "pending" || booking.status == "confirmed" %>
+                  <p class="card-text">
+                  <%= form_with model: booking, method: :put, class: "d-flex" do |f| %>
+                    <div class="actions">
+                        <%= f.hidden_field :status, value: "declined" %>
+                        <%= f.submit "Decline booking", class: "btn btn-outline-primary px-3" %>
+                    </div>
+                  <% end %>
+                </p>
+              <% end %>
+            </div>
           </div>
-        </div>
         </div>
       <% end %>
     <% end %>

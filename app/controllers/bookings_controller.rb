@@ -24,6 +24,20 @@ class BookingsController < ApplicationController
     end
   end
 
+   def edit
+    @booking = Booking.find(params[:id])
+    @flat = @booking.flat
+    authorize @booking
+  end
+
+  def update
+    @booking = Booking.find(params[:id])
+    @booking.update(booking_params)
+    authorize @booking
+    redirect_to dashboard_path(@booking.id)
+  end
+
+
   def destroy
     authorize @booking
   end
@@ -35,6 +49,6 @@ class BookingsController < ApplicationController
   end
 
   def booking_params
-    params.require(:booking).permit(:start_date, :end_date)
+    params.require(:booking).permit(:start_date, :end_date, :status)
   end
 end
